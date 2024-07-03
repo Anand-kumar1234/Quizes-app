@@ -1,0 +1,166 @@
+
+import { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+
+import { StyleSheet, Text, Button, View, TouchableOpacity } from 'react-native';
+
+  export  function App () {
+
+  const [currenqu, setcurrenqu] = useState(0);
+  const [mcurrenqu, setmcurrenqu] = useState(0);
+  const [score, setScore] = useState(0);
+ const [showscore, setshowscore] = useState(false);
+ 
+  const quizedata = [
+    {
+      question: 'which is capital of india?',
+      options: ['delhi', 'chennai', 'kolkata','mumbai'],
+      answer: 'delhi',
+      
+    },
+    {
+      question: 'which planet is called "red planet"?',
+      options: ['saturn', 'earth', 'jupitar', 'mars'],
+      answer: 'mars',
+      
+    },
+    {
+      question: 'How many continents in world ',
+      options: ['4', '9', '7','6'],
+      answer: '7',
+      
+    },
+    
+   
+    {
+      question: 'how many carbon in benzen?',
+      options: ['10', '7', '8', '6'],
+      answer: '6',
+      
+    },
+    {
+      question: 'what is carbon?',
+      options: ['solid', 'liquid', 'gas','all'],
+      answer: 'gas',
+    
+    },
+    {
+      question: 'why is famous kota?',
+      options: ['ssc', 'both b and c', 'neet','upsc'],
+      answer: 'both a and b',
+      
+    },
+    {
+      question: 'why jee famous?',
+      options: ['ssc', 'neet', 'iit','banking'],
+      answer: 'iit',
+      
+    },
+    
+  ];
+  
+  const handleAnswer = (selectedAnswer) => {
+    const answer = quizedata[currenqu]?.answer;
+    if (answer === selectedAnswer) {
+      setScore((preScore) => preScore + 1);
+    }
+
+    const nextquestion = currenqu + 1;
+    if (nextquestion < quizedata.length) {
+      setcurrenqu(nextquestion);
+    } else {
+      setshowscore(true);
+    }
+  };
+  handRestart = () => {
+    setcurrenqu(0);
+    setScore(0);
+    setshowscore(false);
+  };
+ 
+  return (
+    
+
+    <View style={styles.container}>
+    
+<Text style={{fontSize:30,color:"rgb(23,212,123)",alignItems:'upper'}}>  quize app 💡
+
+
+</Text>
+    
+  
+      {showscore ? (
+        <View>
+        
+          <Text
+            style={{ fontSize: 30, color: 'red',textAlign:'left' }}> 
+            {score} 
+          </Text>
+          <Text style={{ fontSize: 20, color: 'blue',textAlign:'left'}}>{' '}
+            
+            your score ✅ 
+          </Text>
+          <TouchableOpacity
+            style={styles.optioncontainer}
+            onPress={handRestart}>
+            <Text style={styles.resetbtn}>Reset</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.questionscontainer}>
+          <Text style={styles.questionText}>
+            {quizedata[currenqu]?.question}
+          </Text>
+          {quizedata[currenqu]?.options.map((item) => {
+            return (
+              <TouchableOpacity
+                onPress={() => handleAnswer(item)}
+                style={styles.optioncontainer}>
+                <Text style={styles.optionsstyle}>{item}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      )}
+    </View>
+    
+  );
+}
+ 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'rgb(221,191,222)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  questionscontainer: {
+    backgroundColor: '',
+    color:'red',
+    padding: 10,
+    margin: 10,
+    borderRadius: 7,
+  },
+  optionsstyle: {
+    color: 'red',
+    padding: 5,
+    alignSelf: 'center',
+    fontSize: 20,
+  },
+  optioncontainer: {
+    borderColor: 'blue',
+    borderWidth: 2,
+    marginTop: 15,
+  },
+  questionText: {
+    fontSize: 30,
+    color:'Alice blue'
+  },
+  resetbtn: {
+    fontSize: 18,
+    paddingHorizontal: 10,
+  },
+});
+ export default  App;
+
+
